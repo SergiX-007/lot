@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&f" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atma:wght@300;400;500;600;700&family=Borel&family=Cherry+Bomb+One&family=Delius+Swash+Caps&family=Freckle+Face&family=Grand+Hotel&family=Pacifico&family=Sirivennela&display=swap" rel="stylesheet">    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family:  "Borel", cursive;
+        }
+        
+        body {
+            background-image: url(https://c4.wallpaperflare.com/wallpaper/873/975/781/python-programming-minimalism-grey-technology-hd-wallpaper-preview.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        
+        h1 {
+            font-family: "Cherry Bomb One", system-ui;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .question-container {
+           
+            display: none;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .question-container.active {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            margin-bottom: 15px;
+            color: #fdbb2d;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .answer-input {
+            width: 80%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .submit-btn {
+            background-color: #a09004;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #a08f45;
+        }
+        
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .success {
+            background-color: rgba(175, 152, 76, 0.3);
+            color: #afa04c;
+        }
+        
+        .error {
+            background-color: rgba(244, 67, 54, 0.3);
+            color: #910a00;
+        }
+        
+        .congrats-container {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .congrats-container.active {
+            display: block;
+            animation: fadeIn 1s ease;
+        }
+        
+        .download-btn {
+            background-color: #f3cd2100;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: inline-block;
+            text-decoration: none;
+            transition: font-size 0.5s ease;
+        }
+        
+        .download-btn:hover {
+            font-size: 3rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #ffd000;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 600px) {
+            body{
+                background-image: url(https://e1.pxfuel.com/desktop-wallpaper/986/488/desktop-wallpaper-python-logo-by-murillombom-python-logo-thumbnail.jpg);
+            }
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .answer-input {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SURPRISE</h1>
+        <p class="progress-text">Progression: <span id="progress">0%</span></p>
+        <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+        </div>
+        
+        <!-- Question 1 -->
+        <div class="question-container active" id="question1">
+            <h2>Question 1</h2>
+            <p>Je suis un abréviation à 3 lettre de l'un des molécules biologiques fondamentales de la famille des guanine, etc... Qui suis-je ?</p>
+            <input type="text" class="answer-input" id="answer1" placeholder="Votre réponse...">
+            <button class="submit-btn" onclick="checkAnswer(1)">Valider</button>
+            <div class="message" id="message1"></div>
+        </div>
+        
+        <!-- Question 2 -->
+        <div class="question-container" id="question2">
+            <h2>Question 2</h2>
+            <p>Je suis un légume qui a été très populaire à Madagascar en 2023 lors des éléctions présidentielle. Qu'est-ce que je suis ?</p>
+            <input type="text" class="answer-input" id="answer2" placeholder="Votre réponse...">
+            <button class="submit-btn" onclick="checkAnswer(2)">Valider</button>
+            <div class="message" id="message2"></div>
+        </div>
+        
+        <!-- Message de félicitations -->
+        <div class="congrats-container" id="congrats">
+            <h2>Yeahhh!</h2>
+            <p>Tu as résolu toutes les énigmes!</p>
+            <p>Voici ta récompense👇🏼.</p>
+            <a href="Rebelle.rar" class="download-btn" id="download-btn">🎁</a>
+        </div>
+    </div>
+
+    <script>
+        // Réponses correctes
+        const correctAnswers = {
+            1: "val",
+            2: "chou"
+        };
+        
+        // État des réponses
+        let answeredQuestions = {
+            1: false,
+            2: false
+        };
+        
+        // Vérifier la réponse
+        function checkAnswer(questionNumber) {
+            const userAnswer = document.getElementById(`answer${questionNumber}`).value.trim().toLowerCase();
+            const messageElement = document.getElementById(`message${questionNumber}`);
+            
+            if (userAnswer === correctAnswers[questionNumber]) {
+                messageElement.textContent = "Bonne réponse !";
+                messageElement.className = "message success";
+                answeredQuestions[questionNumber] = true;
+                
+                // Passer à la question suivante
+                setTimeout(() => {
+                    if (questionNumber === 1) {
+                        document.getElementById('question1').classList.remove('active');
+                        document.getElementById('question2').classList.add('active');
+                    } else if (questionNumber === 2) {
+                        document.getElementById('question2').classList.remove('active');
+                        document.getElementById('congrats').classList.add('active');
+                    }
+                    updateProgress();
+                }, 1000);
+            } else {
+                messageElement.textContent = "Mauvaise réponse. Essayez encore !";
+                messageElement.className = "message error";
+            }
+        }
+        
+        // Mettre à jour la barre de progression
+        function updateProgress() {
+            const totalQuestions = 2;
+            let answeredCount = 0;
+            
+            for (let i = 1; i <= totalQuestions; i++) {
+                if (answeredQuestions[i]) answeredCount++;
+            }
+            
+            const progressPercentage = (answeredCount / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+            document.getElementById('progress').textContent = `${progressPercentage}%`;
+        }
+        
+        // Permettre de soumettre les réponses avec la touche Entrée
+        document.getElementById('answer1').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer(1);
+            }
+        });
+        
+        document.getElementById('answer2').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer(2);
+            }
+        });
+        
+        // Initialiser la progression
+        updateProgress();
+    </script>
+</body>
+</html>
